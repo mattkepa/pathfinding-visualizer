@@ -1,13 +1,14 @@
 import pygame
+from app_config import AppConfig
 
 
 pygame.init()
 
 
-def main():
-    pygame.display.set_mode((800, 800))
-    pygame.display.set_caption('A* Pathfinding Algorithm Visualizer')
+app = AppConfig(size=800)
 
+
+def main():
     run = True
     while run:
         for event in pygame.event.get():
