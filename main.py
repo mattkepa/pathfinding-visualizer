@@ -9,6 +9,9 @@ app = AppConfig(size=800)
 
 
 def main():
+    start_node = None
+    end_node = None
+
     run = True
     while run:
         for event in pygame.event.get():
