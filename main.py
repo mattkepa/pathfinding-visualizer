@@ -30,6 +30,9 @@ def main():
 
             if pygame.mouse.get_pressed()[0]: # LEFT MOUSE CLICK
                 pos = pygame.mouse.get_pos()
+                # check if click position was on the grid
+                if pos[0] > app.size:
+                    continue
                 row, col = get_clicked_pos(pos, app.rows, app.columns, app.size)
                 clicked_node = app.grid[row][col]
                 if start_node == None and clicked_node != end_node and not clicked_node.is_obstacle():
@@ -43,6 +46,9 @@ def main():
 
             elif pygame.mouse.get_pressed()[2]: # RIGHT MOUSE CLICK
                 pos = pygame.mouse.get_pos()
+                # check if click position was on the grid
+                if pos[0] > app.size:
+                    continue
                 row, col = get_clicked_pos(pos, app.rows, app.columns, app.size)
                 clicked_node = app.grid[row][col]
                 clicked_node.reset()
