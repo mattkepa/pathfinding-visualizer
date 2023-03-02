@@ -1,6 +1,6 @@
 import pygame
 from app_config import AppConfig
-from utils import draw, get_clicked_pos
+from utils import draw, get_clicked_pos, a_star_search
 
 
 pygame.init()
@@ -13,6 +13,8 @@ def main():
     start_node = None
     end_node = None
 
+    searching = False
+
     run = True
     while run:
 
@@ -21,6 +23,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            if searching:
+                continue
 
             if pygame.mouse.get_pressed()[0]: # LEFT MOUSE CLICK
                 pos = pygame.mouse.get_pos()
@@ -44,6 +49,15 @@ def main():
                     start_node = None
                 elif clicked_node == end_node:
                     end_node = None
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and not searching: # SPACEBAR PRESS
+                    for row in app.grid:
+                        for node in row:
+                            node.update_neighbors(app.grid)
+                    searching = True
+                    a_star_search(app.grid, start_node, end_node, lambda: draw(app.window, app.grid, app.rows, app.columns, app.size))
+                    searching = False
 
     pygame.quit()
 
