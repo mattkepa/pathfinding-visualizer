@@ -1,5 +1,6 @@
 import pygame
 import math
+from random import getrandbits
 from queue import PriorityQueue
 
 
@@ -68,6 +69,23 @@ def get_clicked_pos(pos, rows, columns, size):
     row =  y // n_size
     col = x // n_size
     return (row, col)
+
+
+def generate_maze(grid, rows, columns):
+    """
+    Randomly generates obstacles to create imitation of a maze
+
+    :param grid: list[list[Node]] - two dimensional list of Nodes objects
+    :param rows: int - number of rows of grid
+    :param columns: int - number of columns of grid
+    """
+    for i in range(rows):
+        for j in range(columns):
+            node = grid[i][j]
+            # randomly choose true or false by generating one bit: 1 - True 0 - False
+            obstacle = bool(getrandbits(1))
+            if obstacle:
+                node.make_obstacle()
 
 
 

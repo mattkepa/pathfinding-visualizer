@@ -1,6 +1,6 @@
 import pygame
 from app_config import AppConfig
-from utils import draw, get_clicked_pos, a_star_search
+from utils import draw, get_clicked_pos, generate_maze, a_star_search
 
 
 pygame.init()
@@ -63,6 +63,9 @@ def main():
                     start_node = None
                     end_node = None
                     app.set_grid(app.rows, app.columns, app.size)
+
+                if event.key == pygame.K_g and not searching and not start_node and not end_node: # G KEY PRESS
+                    generate_maze(app.grid, app.rows, app.columns)
 
     pygame.quit()
 
