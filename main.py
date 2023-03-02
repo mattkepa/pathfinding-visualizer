@@ -6,7 +6,7 @@ from utils import draw, get_clicked_pos, generate_maze, a_star_search
 pygame.init()
 
 
-app = AppConfig(size=800)
+app = AppConfig(algo_name='A* Search Algorithm', algo_fn=a_star_search)
 
 
 def main():
@@ -14,6 +14,7 @@ def main():
     end_node = None
 
     searching = False
+    find_path = app.algorithm
 
     run = True
     while run:
@@ -56,7 +57,7 @@ def main():
                         for node in row:
                             node.update_neighbors(app.grid)
                     searching = True
-                    a_star_search(app.grid, start_node, end_node, lambda: draw(app))
+                    find_path(app.grid, start_node, end_node, lambda: draw(app))
                     searching = False
 
                 if event.key == pygame.K_r and not searching: # R KEY PRESS
@@ -66,6 +67,10 @@ def main():
 
                 if event.key == pygame.K_g and not searching and not start_node and not end_node: # G KEY PRESS
                     generate_maze(app.grid, app.rows, app.columns)
+
+                if event.key == pygame.K_a and not searching: # A KEY PRESS
+                    app.set_algorithm('A* Search Algorithm', a_star_search)
+                    find_path = app.algorithm
 
     pygame.quit()
 
