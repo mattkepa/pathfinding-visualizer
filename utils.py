@@ -1,5 +1,6 @@
 import pygame
 import math
+import os
 from random import getrandbits
 from queue import PriorityQueue
 
@@ -9,11 +10,24 @@ COLORS = {
     'white': (255, 255, 255),
     'black': (0, 0, 0),
     'gray': (22, 22, 22),
+    'gray1': (142, 142, 147),
+    'gray2': (199, 199, 204),
+    'gray3': (242, 242, 247),
     'green': (146, 172, 44),
     'red': (227, 6, 19),
     'gold': (248, 196, 9),
     'teal': (48, 176, 199),
     'purple': (93, 47, 136)
+}
+
+CONTROLS = {
+    'KEY_R': pygame.image.load(os.path.join('assets', 'img', 'key_icon_R.png')),
+    'KEY_SPACE': pygame.image.load(os.path.join('assets', 'img', 'key_icon_SPACE.png')),
+    'KEY_A': pygame.image.load(os.path.join('assets', 'img', 'key_icon_A.png')),
+    'KEY_D': pygame.image.load(os.path.join('assets', 'img', 'key_icon_D.png')),
+    'KEY_G': pygame.image.load(os.path.join('assets', 'img', 'key_icon_G.png')),
+    'MOUSE_LEFT': pygame.image.load(os.path.join('assets', 'img', 'mouse_icon_LEFT.png')),
+    'MOUSE_RIGHT': pygame.image.load(os.path.join('assets', 'img', 'mouse_icon_RIGHT.png'))
 }
 
 
@@ -31,6 +45,7 @@ def draw(app):
             node.draw(app.window)
 
     draw_grid(app.window, app.rows, app.columns, app.size)
+    draw_controls(app)
 
     pygame.display.update()
 
@@ -42,13 +57,59 @@ def draw_grid(surface, rows, columns, size):
     :param surface: Surface - pygame surface object
     :param rows: int - number of rows of grid
     :param columns: int - number of columns of grid
-    :param size: int - size of the width and height of screen in pixels
+    :param grid_size: int - size of the width and height of grid in pixels
     """
     n_size = size // rows #set size of node based on window size and number of rows/columns
     for i in range(rows):
         pygame.draw.line(surface, COLORS['gray'], (0, i*n_size), (size, i*n_size))
     for j in range(columns):
         pygame.draw.line(surface, COLORS['gray'], (j*n_size, 0), (j*n_size, size))
+
+
+def draw_controls(app):
+    """
+    Draws instruction for control program flow on the screen
+
+    :param app: AppConfig - app configuration object with constants and methods
+    """
+    start_x = app.size + app.SIDE_PADDING
+
+    # Background
+    pygame.draw.rect(app.window, COLORS['gray3'], (app.size, 0, app.WIDTH - app.size, app.HEIGHT))
+    pygame.draw.line(app.window, COLORS['gray2'], (app.size, 0), (app.size, app.HEIGHT), 2)
+    # Title - Algorithm Name
+    title = app.FONT_TITLE.render(app.algo_name, True, COLORS['gray'])
+    app.window.blit(title, (start_x, app.TOP_PADDING))
+    # Control - Set A* Algorithm
+    app.window.blit(CONTROLS['KEY_A'], (start_x, 115))
+    control_text = app.FONT_CONTROLS.render('A* Search', True, COLORS['gray1'])
+    app.window.blit(control_text, (start_x + 55, 115 + 20 - control_text.get_height() // 2))
+    # Control - Set Dijkstra's Algorithm
+    app.window.blit(CONTROLS['KEY_D'], (start_x, 115 + 60))
+    control_text = app.FONT_CONTROLS.render('Dijkstra\'s Search', True, COLORS['gray1'])
+    app.window.blit(control_text, (start_x + 55, 115 + 60 + 20 - control_text.get_height() // 2))
+    # Separator
+    pygame.draw.line(app.window, COLORS['gray2'], (start_x, 235), (app.WIDTH - app.SIDE_PADDING, 235), 1)
+    # Control - Set Point
+    app.window.blit(CONTROLS['MOUSE_LEFT'], (start_x, 255))
+    control_text = app.FONT_CONTROLS.render('Set point', True, COLORS['gray1'])
+    app.window.blit(control_text, (start_x + 55, 255 + 20 - control_text.get_height() // 2))
+    # Control - Unset Point
+    app.window.blit(CONTROLS['MOUSE_RIGHT'], (start_x, 255 + 60))
+    control_text = app.FONT_CONTROLS.render('Unset point', True, COLORS['gray1'])
+    app.window.blit(control_text, (start_x + 55, 255 + 60 + 20 - control_text.get_height() // 2))
+    # Control - Generate Maze
+    app.window.blit(CONTROLS['KEY_G'], (start_x, 255 + 120))
+    control_text = app.FONT_CONTROLS.render('Generate maze', True, COLORS['gray1'])
+    app.window.blit(control_text, (start_x + 55, 255 + 120 + 20 - control_text.get_height() // 2))
+    # Control - Reset Grid
+    app.window.blit(CONTROLS['KEY_R'], (start_x, 255 + 180))
+    control_text = app.FONT_CONTROLS.render('Reset', True, COLORS['gray1'])
+    app.window.blit(control_text, (start_x + 55, 255 + 180 + 20 - control_text.get_height() // 2))
+    # Control - Start Searching
+    app.window.blit(CONTROLS['KEY_SPACE'], (start_x, 255 + 240))
+    control_text = app.FONT_CONTROLS.render('Start searching', True, COLORS['gray1'])
+    app.window.blit(control_text, (start_x + 95, 255 + 240 + 20 - control_text.get_height() // 2))
 
 
 def get_clicked_pos(pos, rows, columns, size):
@@ -58,9 +119,9 @@ def get_clicked_pos(pos, rows, columns, size):
     :param pos: tuple[int, int] - cursor position when click occured
     :param rows: int - number of rows of grid
     :param columns: int - number of columns of grid
-    :param size: int - size of the width and height of screen in pixels
+    :param grid_size: int - size of the width and height of grid in pixels
     """
-    n_size = size // rows #set size of node based on window size and number of rows/columns
+    n_size = size // rows #set size of node based on grid size and number of rows/columns
     y, x = pos
 
     row =  y // n_size
