@@ -59,6 +59,11 @@ def main():
                     a_star_search(app.grid, start_node, end_node, lambda: draw(app.window, app.grid, app.rows, app.columns, app.size))
                     searching = False
 
+                if event.key == pygame.K_r and not searching: # R KEY PRESS
+                    start_node = None
+                    end_node = None
+                    app.set_grid(app.rows, app.columns, app.size)
+
     pygame.quit()
 
 
