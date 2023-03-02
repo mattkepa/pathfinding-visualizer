@@ -18,7 +18,7 @@ def main():
     run = True
     while run:
 
-        draw(app.window, app.grid, app.rows, app.columns, app.size)
+        draw(app)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -56,7 +56,7 @@ def main():
                         for node in row:
                             node.update_neighbors(app.grid)
                     searching = True
-                    a_star_search(app.grid, start_node, end_node, lambda: draw(app.window, app.grid, app.rows, app.columns, app.size))
+                    a_star_search(app.grid, start_node, end_node, lambda: draw(app))
                     searching = False
 
                 if event.key == pygame.K_r and not searching: # R KEY PRESS

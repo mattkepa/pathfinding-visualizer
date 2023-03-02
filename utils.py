@@ -18,22 +18,19 @@ COLORS = {
 
 
 
-def draw(surface, grid, rows, columns, size):
+def draw(app):
     """
     Draws grid lines and nodes on the screen and updates it
 
-    :param surface: Surface - pygame surface object
-    :param rows: int - number of rows of grid
-    :param columns: int - number of columns of grid
-    :param size: int - size of the width and height of screen in pixels
+    :param app: AppConfig - app configuration object with constants and methods
     """
-    surface.fill(COLORS['white'])
+    app.window.fill(COLORS['white'])
 
-    for row in grid:
+    for row in app.grid:
         for node in row:
-            node.draw(surface)
+            node.draw(app.window)
 
-    draw_grid(surface, rows, columns, size)
+    draw_grid(app.window, app.rows, app.columns, app.size)
 
     pygame.display.update()
 
