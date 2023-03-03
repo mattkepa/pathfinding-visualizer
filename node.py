@@ -3,7 +3,7 @@ from utils import COLORS
 
 class Node:
     """
-    Represents single node in grid for A* Pathfinding
+    Represents single node in grid for pathfinding algorithm
 
     :param row: int
     :param col: int

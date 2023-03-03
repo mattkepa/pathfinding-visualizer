@@ -150,7 +150,7 @@ def generate_maze(grid, rows, columns):
 def a_star_search(grid, start, end, draw_fn):
     """
     A* Pathfinding Algorithm implementation.
-    Sets g and f score maps for all nodes in grid and traverse this grid based on these scores.
+    Sets g and f score maps for all nodes in grid and traverse this grid based on these scores (lowest).
     Draws every step on the screen and at the end draw path
 
     :param grid: list[list[Node]] - two dimensional list of Nodes objects
@@ -160,10 +160,10 @@ def a_star_search(grid, start, end, draw_fn):
     """
 
     # init g_score map with all nodes and their g_score (how far from start node they are)
-    # at the beginning all have value of infinity
+    # at the beginning all but first have value of infinity
     g_score = { node: float('inf') for row in grid for node in row }
     # init f_score map with all nodes and their f_score (sum of g_score and h_score - how far from end node they are)
-    # at the beginning all have value of infinity
+    # at the beginning all but firt have value of infinity
     f_score = { node: float('inf') for row in grid for node in row }
 
     g_score[start] = 0
