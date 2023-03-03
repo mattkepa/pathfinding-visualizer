@@ -1,6 +1,6 @@
 import pygame
 from app_config import AppConfig
-from utils import draw, get_clicked_pos, generate_maze, a_star_search
+from utils import draw, get_clicked_pos, generate_maze, a_star_search, dijkstras_search
 
 
 pygame.init()
@@ -76,6 +76,10 @@ def main():
 
                 if event.key == pygame.K_a and not searching: # A KEY PRESS
                     app.set_algorithm('A* Search Algorithm', a_star_search)
+                    find_path = app.algorithm
+
+                if event.key == pygame.K_d and not searching: # D KEY PRESS
+                    app.set_algorithm('Dijkstra\'s Algorithm', dijkstras_search)
                     find_path = app.algorithm
 
     pygame.quit()

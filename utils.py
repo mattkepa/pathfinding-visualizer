@@ -220,6 +220,74 @@ def a_star_search(grid, start, end, draw_fn):
     return False
 
 
+def dijkstras_search(grid, start, end, draw_fn):
+    """
+    Dijkstra's Pathfinding Algorithm implementation.
+    Sets distances map from start node for all nodes in grid and traverse this grid based on the lowest distance.
+    Draws every step on the screen and at the end draws path
+
+    :param grid: list[list[Node]] - two dimensional list of Nodes objects
+    :param: start: Node - start node
+    :param: end: Node - end node
+    :param: draw_fn: function - reference to drawing function
+    """
+
+    # init dist map with all nodes and their distance from the start node
+    # at the beginning all but first have value of infinity
+    dist = { node: float('inf') for row in grid for node in row }
+
+    dist[start] = 0
+
+    order = 0 # keeps track when node was added to the queue
+    from_map = {} # keeps track from which node current node is reached
+    open_queue = PriorityQueue()
+    open_queue.put((dist[start], order, start))
+    open_set = { start } # keeps track which nodes are in open_queue
+
+
+    while not open_queue.empty():
+        # adds the ability to close the program while searching for a path
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+
+        # get node with the lowest distance from start node from the queue
+        current = open_queue.get()[2]
+        open_set.remove(current)
+
+        # if current node is end node reconstruct and draw a path
+        if current == end:
+            reconstruct_path(from_map, current, draw_fn)
+            start.make_start()
+            end.make_end()
+            return True
+
+        for neighbor in current.neighbors:
+            # d(current,neighbor) is distance from current to neighbor
+            # tentative_dist is the distance from start to the neighbor through current
+            tentative_dist = dist[current] + d(current.get_pos(), neighbor.get_pos())
+            if tentative_dist < dist[neighbor]:
+                # this path to neighbor is so far the best so update it
+                from_map[neighbor] = current
+                # update distance for neighbor node
+                dist[neighbor] = tentative_dist
+                # add neighbor to open_queue if is not in it
+                if neighbor not in open_set:
+                    order += 1
+                    open_queue.put((dist[neighbor], order, neighbor))
+                    open_set.add(neighbor)
+                    neighbor.make_open()
+
+        # draw nodes and after it change current node state for next drawing
+        draw_fn()
+        if current != start:
+            current.make_closed()
+
+    # open_queue is empty but end node was never reached
+    return False
+
+
 def reconstruct_path(from_map, current, draw_fn):
     """
     Traverse from_map created by pathfinding algorithm and draws path of nodes on the screen
