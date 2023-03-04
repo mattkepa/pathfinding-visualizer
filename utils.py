@@ -5,6 +5,9 @@ from random import getrandbits
 from queue import PriorityQueue
 
 
+basedir = os.path.dirname(__file__)
+
+
 # CONSTANTS
 COLORS = {
     'white': (255, 255, 255),
@@ -21,13 +24,13 @@ COLORS = {
 }
 
 CONTROLS = {
-    'KEY_R': pygame.image.load(os.path.join('assets', 'img', 'key_icon_R.png')),
-    'KEY_SPACE': pygame.image.load(os.path.join('assets', 'img', 'key_icon_SPACE.png')),
-    'KEY_A': pygame.image.load(os.path.join('assets', 'img', 'key_icon_A.png')),
-    'KEY_D': pygame.image.load(os.path.join('assets', 'img', 'key_icon_D.png')),
-    'KEY_G': pygame.image.load(os.path.join('assets', 'img', 'key_icon_G.png')),
-    'MOUSE_LEFT': pygame.image.load(os.path.join('assets', 'img', 'mouse_icon_LEFT.png')),
-    'MOUSE_RIGHT': pygame.image.load(os.path.join('assets', 'img', 'mouse_icon_RIGHT.png'))
+    'KEY_R': pygame.image.load(os.path.join(basedir, 'assets', 'img', 'key_icon_R.png')),
+    'KEY_SPACE': pygame.image.load(os.path.join(basedir, 'assets', 'img', 'key_icon_SPACE.png')),
+    'KEY_A': pygame.image.load(os.path.join(basedir, 'assets', 'img', 'key_icon_A.png')),
+    'KEY_D': pygame.image.load(os.path.join(basedir, 'assets', 'img', 'key_icon_D.png')),
+    'KEY_G': pygame.image.load(os.path.join(basedir, 'assets', 'img', 'key_icon_G.png')),
+    'MOUSE_LEFT': pygame.image.load(os.path.join(basedir, 'assets', 'img', 'mouse_icon_LEFT.png')),
+    'MOUSE_RIGHT': pygame.image.load(os.path.join(basedir, 'assets', 'img', 'mouse_icon_RIGHT.png'))
 }
 
 

@@ -21,8 +21,8 @@ class AppConfig:
     TOP_PADDING = 40
     ROWS = 50
     COLUMNS = 50
-    FONT_TITLE = pygame.font.Font(os.path.join('assets', 'fonts', 'CircularStd-Medium.ttf'), 28)
-    FONT_CONTROLS = pygame.font.Font(os.path.join('assets', 'fonts', 'CircularStd-Book.ttf'), 18)
+    FONT_TITLE = pygame.font.Font(os.path.join(os.path.dirname(__file__), 'assets', 'fonts', 'CircularStd-Medium.ttf'), 28)
+    FONT_CONTROLS = pygame.font.Font(os.path.join(os.path.dirname(__file__), 'assets', 'fonts', 'CircularStd-Book.ttf'), 18)
 
 
     def __init__(self, algo_name, algo_fn):
